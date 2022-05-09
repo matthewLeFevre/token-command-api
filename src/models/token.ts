@@ -1,6 +1,6 @@
 export enum TokenType {
-  Plain,
-  Encrypted,
+  JWT,
+  PASETO,
   Stateless,
 }
 
@@ -14,4 +14,8 @@ export interface Token {
 
 export interface StatelessToken extends Token {
   data: any;
+}
+
+export interface StatefulToken extends Token {
+  encrypted: boolean;
 }
