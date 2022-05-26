@@ -5,6 +5,7 @@ export enum TokenType {
 }
 
 export interface Token {
+  id?: string,
   type: TokenType;
   appId?: string;
   userId?: string;
