@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@app-command/types": "^0.1.0",
     "@everlast-brands/error-handling": "^0.1.0",
     "@everlast-brands/secure-jwt": "^1.0.0",
     "cors": "^2.8.5",

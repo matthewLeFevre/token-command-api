@@ -9,6 +9,7 @@ import deleteById from "./controllers/deleteById";
 import getById from "./controllers/getById";
 import getByUserId from "./controllers/getByUserId";
 import getByAppId from "./controllers/getByAppId";
+import verifyAccess from "./middleware/verifyAccess";
 
 export default function createServer() {
   dotenv.config();
@@ -18,6 +19,7 @@ export default function createServer() {
 
   // Performs the same task that body parser does
   app.use(express.json());
+  app.use(verifyAccess);
 
   let DB;
   (async function () {
