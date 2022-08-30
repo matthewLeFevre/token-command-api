@@ -3,9 +3,10 @@ import { Request } from "express";
 import isValidStatelessToken from "../../middleware/isValidStatelessToken";
 
 async function action(req: Request, res) {
-  send({ res, data: {...req.tokenDetails.data, id: req.tokenDetails.id, expireTime: req.tokenDetails.expireTime} });
+    await req.db.tables.tokens.updateWithId(req.tokenDetails.id, {expireTime: 0})
+    send({res});
 }
 
-const verify = [asyncWrapper(isValidStatelessToken), asyncWrapper(action)];
+const revoke = [asyncWrapper(isValidStatelessToken), asyncWrapper(action)];
 
-export default verify;
+export default revoke;

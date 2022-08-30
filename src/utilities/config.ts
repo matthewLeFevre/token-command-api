@@ -1,0 +1,1 @@
+export const DEFAULT_LIVE_TIME = 1000 * 60 * 5;

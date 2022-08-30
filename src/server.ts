@@ -2,13 +2,15 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import Rectify from "rectifyjs";
-import EncryptedRouter from "./routes/encrypted";
-import PlainRouter from "./routes/plain";
+import JWTRouter from "./routes/jwt";
+import PASETORouter from "./routes/paseto";
 import StatelessRouter from "./routes/stateless";
 import deleteById from "./controllers/deleteById";
 import getById from "./controllers/getById";
 import getByUserId from "./controllers/getByUserId";
 import getByAppId from "./controllers/getByAppId";
+import { SecureJwt } from "@everlast-brands/secure-jwt";
+import { DEFAULT_LIVE_TIME } from "./utilities/config";
 import verifyAccess from "./middleware/verifyAccess";
 
 export default function createServer() {
@@ -32,12 +34,13 @@ export default function createServer() {
   })();
   app.use((req, res, next) => {
     req.db = DB;
+    req.jwt = new SecureJwt(process.env.JWT_SECRET, DEFAULT_LIVE_TIME);
     next();
   });
 
   // App routes
-  app.use("/token/encrypted", EncryptedRouter);
-  app.use("/token/plain", PlainRouter);
+  app.use("/token/jwt", JWTRouter);
+  app.use("/token/paseto", PASETORouter);
   app.use("/token/stateless", StatelessRouter);
   app.get("/token/:id", getById);
   app.get("/token/user/:id", getByUserId);
